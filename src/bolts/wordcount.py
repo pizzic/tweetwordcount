@@ -29,7 +29,7 @@ class WordCounter(Bolt):
 
         cur = conn.cursor()
         try:
-            cur.execute('''CREATE TABLE Tweetwordcount 
+            cur.execute('''CREATE TABLE tweetwordcount 
                 (word TEXT PRIMARY KEY     NOT NULL,
                 count INT     NOT NULL);''')
             conn.commit()
@@ -60,10 +60,10 @@ class WordCounter(Bolt):
         cur = conn.cursor()
 
         if (count == 1):
-            cur.execute("INSERT INTO Tweetwordcount (word,count) \
-                VALUES (word, 1);")
+            cur.execute("INSERT INTO tweetwordcount (word,count) \
+                VALUES (\'%s\', 1);" % word)
         else:
-            cur.execute("UPDATE Tweetwordcount SET count=%d WHERE word=%s", (count, word))
+            cur.execute("UPDATE tweetwordcount SET count=%d WHERE word=\'%s\'", (count, word))
         conn.commit()
 
         #Select

@@ -15,15 +15,16 @@ if len(args) < 2:
    quit()
 
 word = args[1]
+print(word)
 
 conn = psycopg2.connect(database="tcount", user="postgres", password="pass", host="localhost", port="5432")
 
 #Select
 cur = conn.cursor()
-cur.execute("SELECT word, count from Tweetwordcount WHERE word=%s", (word))
+cur.execute("SELECT word, count FROM tweetwordcount WHERE word = \'%s\';" % word)
 records = cur.fetchall()
 for rec in records:
-   print "Total number of occurences of \"%s\": %d", (rec[0], rec[1])
+   print "Total number of occurences of \"%s\": %d" % (rec[0], rec[1])
 conn.commit()
 
 conn.close()

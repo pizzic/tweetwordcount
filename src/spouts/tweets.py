@@ -31,8 +31,8 @@ class TweetStreamListener(tweepy.StreamListener):
         super(self.__class__, self).__init__(listener.tweepy_api())
 
     def on_status(self, status):
-        self.listener.queue().put(status.text, timeout = 0.01)
         self.listener.log(status.text)
+        self.listener.queue().put(status.text, timeout = 0.01)
         return True
   
     def on_error(self, status_code):
@@ -40,6 +40,7 @@ class TweetStreamListener(tweepy.StreamListener):
         return True # keep stream alive
   
     def on_limit(self, track):
+        self.listener.log('On level: %s' % track)
         return True # keep stream alive
 
 #    def on_data(self, data):
@@ -78,7 +79,6 @@ class Tweets(Spout):
         stream = tweepy.Stream(auth, listener, timeout=None)
         stream.filter(languages=["en"], track=["a", "the", "i", "you", "u"], async=True)
         #stream.sample()
-        print("Tweet spout initialized!!!!!!!")
 
     def queue(self):
         return self._queue
