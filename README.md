@@ -1,5 +1,5 @@
 To run this application, run:
-    sparse run -n tweetwordcount
+    sparse run
 
 To query the results, run:
     python final_result.py <word>
